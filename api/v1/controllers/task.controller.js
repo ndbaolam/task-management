@@ -46,12 +46,41 @@ module.exports.index = async (req, res) => {
 
 //[GET] /api/v1/tasks/detail/:id
 module.exports.detail = async (req, res) => {
-    const id = req.params.id;
+    try {
+        const id = req.params.id;
 
-    const task = await Task.findOne({
-        _id: id,
-        deleted: false,
-    });
+        const task = await Task.findOne({
+            _id: id,
+            deleted: false,
+        });
 
-    res.json(task);
+        res.json(task);
+    } catch (error) {
+        res.json(error);
+    }
+}
+
+//[PATCH] /api/v1/tasks/change-status/:id
+module.exports.changeStatus = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const status = req.body.status;
+
+        await Task.updateOne({
+            _id: id,
+            deleted: false,
+        }, {
+            status: status
+        });
+
+        res.json({
+            code: 200,
+            message: "Cập nhật trạng thái thành công!"
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Cập nhật trạng thái thất bại!"
+        });
+    } 
 }
