@@ -173,3 +173,17 @@ module.exports.detail = async (req, res) => {
         info: res.locals.user
     });
 }
+
+//[GET] /api/v1/users/list
+module.exports.list = async (req, res) => {
+    const users = await User.find({
+        deleted: false
+    }).select('id fullName email');
+
+    console.log(users.length);
+
+    res.json({
+        code: 200,
+        message: "Lấy danh sách thành công!",
+    });
+};
