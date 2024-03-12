@@ -1,5 +1,5 @@
 const taskRoutes = require('./task.route');
-const userRoutes = require('./user.router');
+const userRoutes = require('./user.route');
 
 module.exports = (app) => {
 
