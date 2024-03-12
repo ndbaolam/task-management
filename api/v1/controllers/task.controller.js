@@ -119,3 +119,43 @@ module.exports.changeMulti = async (req, res) => {
         })
     }
 }
+
+module.exports.create = async (req, res) => {
+    try {
+        const newTask = new Task(req.body);
+        const data = await newTask.save();
+        res.json({
+            code: 200,
+            message: "Thêm thành công!",
+            data: data
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Thêm thất bại!"
+        });
+    }
+}
+
+//[DELETE] /api/v1/tasks/delete/:id
+module.exports.delete = async (req, res) => {
+    try {
+        await Task.updateOne({
+            _id: req.params.id,
+            deleted: false,
+        }, {
+            deleted: true,
+            deletedAt: new Date()
+        });
+
+        res.json({
+            code: 200,
+            message: "Xóa thành công!",
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Xóa thất bại!"
+        })
+    }
+}
