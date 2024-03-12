@@ -164,3 +164,12 @@ module.exports.resetPassword = async (req, res) => {
       message: "Cập nhật mật khẩu thành công!"
     });
 };
+
+//[GET] /api/v1/users/detail/:id
+module.exports.detail = async (req, res) => {
+    res.json({
+        code: 200,
+        message: "Lấy thông tin thành công!",
+        info: res.locals.user
+    });
+}
